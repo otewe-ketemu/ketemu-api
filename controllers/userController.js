@@ -105,6 +105,14 @@ methods.getOfficeAddressGeolocation = (req, res) => {
   })
 } //getOfficeAddressGeolocation
 
+methods.searchByUsername = (req, res) => {
+  let regexUser = new RegExp('\\b' + req.params.username, 'i')
+  User.find({username: regexUser}, (err, records) => {
+    if(err) res.json({err})
+    res.json(records)
+  })
+} //searching through database for partial username
+
 methods.editUser = (req, res) => {
   let pwdUser = req.body.password
     User.findById(req.params.id)
