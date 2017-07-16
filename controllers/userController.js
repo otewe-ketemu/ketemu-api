@@ -114,6 +114,17 @@ methods.editUser = (req, res) => {
     })
 } //editUser
 
+methods.updateAvatarUrl = (req, res) => {
+  User.findById(req.params.id, (err, record) => {
+    if(err) res.json({err})
+    record.avatarURL = req.body.avatar
+    record.save((error, data) => {
+      console.log('AVATAR di CONTROLLER ***', data);
+      res.json(data)
+    })
+  })
+}
+
 methods.deleteUserById = (req, res) => {
     User.findByIdAndRemove(req.params.id, (err, record) => {
       if (err) res.json({err})
