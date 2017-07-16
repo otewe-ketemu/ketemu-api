@@ -15,8 +15,8 @@ describe('USER', () => {
 
   after(done => {
     User.remove({},(error) => {
-      done()
     })
+    done()
   })
 
   // NOTE: signup
@@ -61,8 +61,9 @@ describe('USER', () => {
         res.body.data.username.should.equal('butet')
 
         res.body.data.password.should.not.equal('butet')
-        done()
+
       })
+      done()
     })
   })
 
@@ -107,8 +108,9 @@ describe('USER', () => {
         res.body[0].username.should.equal('butet')
         res.body[0].email.should.equal('butet@gmail.com')
 
-        done()
+
       })
+      done()
     })
   })
 
@@ -127,8 +129,9 @@ describe('USER', () => {
           res.body.username.should.equal('butet')
           res.body.email.should.equal('butet@gmail.com')
 
-          done()
+
       })
+      done()
       })
   })
 
@@ -143,8 +146,9 @@ describe('USER', () => {
           res.should.have.status(200)
           res.body.should.be.a('array')
 
-          done()
+
       })
+      done()
       })
   })
 
@@ -159,8 +163,9 @@ describe('USER', () => {
             res.should.have.status(200)
             res.body.should.be.a('array')
 
-            done()
+
         })
+        done()
         })
     })
 
@@ -192,13 +197,12 @@ describe('USER', () => {
             res.body.email.should.equal('pardamean@gmail.com')
             res.body.officeAddressName.should.equal('Jalan Sultan Iskandar Muda, No. 55')
             res.body.homeAddressName.should.equal('Jalan Tanah Kusir 4, No. 10')
-            // res.body.officeAddressGeolocation.should.equal([-6.260846, 106.7806537])
-            // res.body.homeAddressGeolocation.should.equal([-6.2600141, 106.7793779])
 
             res.body.password.should.not.equal('pardamean')
 
-            done()
+
         })
+        done()
         })
     })
 })
@@ -208,8 +212,8 @@ describe('MEETUP', () => {
 
     after(done => {
         Meetup.remove({},(error) => {
-        done()
         })
+        done()
     })
 
     // NOTE: createmeetup
@@ -250,8 +254,9 @@ describe('MEETUP', () => {
             res.body.typePlaces.should.equal('bar')
             res.body.status.should.equal('TBA')
 
-            done()
+
         })
+        done()
         })
     })
 
@@ -285,8 +290,9 @@ describe('MEETUP', () => {
             res.body[0].typePlaces.should.equal('bar')
             res.body[0].status.should.equal('TBA')
 
-            done()
+
         })
+        done()
         })
     })
 
@@ -321,8 +327,9 @@ describe('MEETUP', () => {
 
             res.body.participants.should.be.a('array')
 
-            done()
+
         })
+        done()
         })
     })
 
@@ -367,8 +374,9 @@ describe('MEETUP', () => {
             res.body.typePlaces.should.equal('park')
             res.body.status.should.equal('TBA')
 
-            done()
+
         })
+        done()
         })
     })
 
@@ -405,8 +413,9 @@ describe('MEETUP', () => {
             res.body.typePlaces.should.equal('park')
             res.body.status.should.equal('TBA')
 
-            done()
+
         })
+        done()
         })
     })
 
@@ -444,8 +453,9 @@ describe('MEETUP', () => {
 
             res.body.participants.should.be.a('array')
 
-            done()
+
         })
+        done()
         })
     })
 
@@ -483,8 +493,9 @@ describe('MEETUP', () => {
 
             res.body.participants.should.be.a('array')
 
-            done()
+
         })
+        done()
         })
     })
 
@@ -520,8 +531,9 @@ describe('MEETUP', () => {
             res.body.participants.should.be.a('array')
             res.body.participants[0].should.equal(idUser)
 
-            done()
+
         })
+        done()
         })
     })
 })
