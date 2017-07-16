@@ -13,6 +13,7 @@ router.post('/signup', userController.signUp)
 router.post('/signin', userController.signIn)
 router.get('/allusers', userController.getAllUsers)
 router.get('/detailuser/:id', userController.getUserById)
+router.get('/searchuser/:username', userController.searchByUsername)
 router.get('/homeaddressgeolocation/:id', userController.getHomeAddressGeolocation)
 router.get('/officeaddressgeolocation/:id', userController.getOfficeAddressGeolocation)
 router.put('/edituser/:id', userController.editUser)  // password harus disertakan
