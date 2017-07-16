@@ -7,7 +7,7 @@ let meetupSchema = new Schema({
     time: Date,
     typePlaces: {
         type: String,
-        enum: ['coworking space', 'library', 'bar', 'park', 'restaurant', 'hotel', 'coffee shop', 'shopping mall']
+        enum: ['coworking_space', 'library', 'bar', 'cafe', 'shopping_mall', 'restaurant', 'park', 'lodging']
     },
     creator: {
       type: Schema.Types.ObjectId,
