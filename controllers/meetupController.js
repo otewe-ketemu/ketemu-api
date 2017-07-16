@@ -5,8 +5,11 @@ methods.createMeetup = (req, res) => {
     let newMeetup = new Meetup({
         title: req.body.title,
         description: req.body.description,
-        time: req.body.time,
+        meetingTime: req.body.meetingTime,
+        confirmationTime: req.body.confirmationTime,
         typePlaces: req.body.typePlaces,
+        placeAddressName: req.body.placeAddressName,
+        placeAddressGeolocation: req.body.placeAddressGeolocation,
         creator: req.body.creator,
         participants: req.body.participants,
         location60: [],
@@ -16,8 +19,6 @@ methods.createMeetup = (req, res) => {
 
     newMeetup.save((err, data) => {
         if (err) res.json({err})
-        // console.log('createMeetup success');
-        // console.log(data);
 
         Meetup.findById(data._id)
         .populate('creator participants.user')
@@ -33,8 +34,6 @@ methods.getAllMeetup = (req, res) => {
     .populate('creator participants.user')
     .exec((err, records) => {
         if (err) res.json({err})
-        // console.log('Data all Meetup success');
-        // console.log(records);
         res.json(records)
     })
 } // getAllMeetup
@@ -52,7 +51,6 @@ methods.editMeetup = (req, res) => {
     Meetup.findById(req.params.id)
     .exec((error, response) => {
         if (error) res.json({error})
-        // console.log('^^^^^^^^^ edit id meetup: ', response._id);
 
         Meetup.findByIdAndUpdate({
             "_id": response._id
@@ -60,8 +58,11 @@ methods.editMeetup = (req, res) => {
             $set: {
                 title: req.body.title || response.title,
                 description: req.body.description || response.description,
-                time: req.body.time || response.time,
+                meetingTime: req.body.meetingTime || response.meetingTime,
+                confirmationTime: req.body.confirmationTime || response.confirmationTime,
                 typePlaces: req.body.typePlaces || response.typePlaces,
+                placeAddressName: req.body.placeAddressName || response.placeAddressName,
+                placeAddressGeolocation: req.body.placeAddressGeolocation || response.placeAddressGeolocation,
                 participants: req.body.participants || response.participants,
                 status: req.body.status || response.status,
                 location60: req.body.location60 || response.location60,
@@ -78,10 +79,7 @@ methods.editMeetup = (req, res) => {
             .populate('creator participants.user')
             .exec((error, record) => {
                 if (error) res.json({error})
-                // console.log('Detail Meetup success');
-                // console.log(record);
                 res.json(record)
-                // console.log('edit Meetup success');
             })
         })
     })
@@ -92,16 +90,12 @@ methods.updateParticipants = (req, res) => {
     .populate('creator participants.user')
     .exec((err, record) => {
         if (err) res.json({err})
-        // console.log('Detail Meetup success');
-        // console.log(record);
         record.participants.push(req.body.participants)
         record.save(err => {
             Meetup.findById(req.params.id)
                 .populate('creator participants.user')
                 .exec((err, record) => {
                     if (err) res.json({err})
-                    // console.log('Detail Meetup success');
-                    // console.log(record);
                     res.json(record)
                 })
         })
@@ -113,11 +107,8 @@ methods.cancelMeetup = (req, res) => {
     .populate('creator participants.user')
     .exec((err, record) => {
         if (err) res.json({err})
-        // console.log('Detail Meetup success');
-        // console.log(typeof record._id);
         record.participants = record.participants.filter(participant => participant._id != req.body.participantId)
         record.save((error, data) => {
-            // console.log('data')
             res.send(data)
         })
     })
@@ -128,22 +119,17 @@ methods.finalizeMeetup = (req, res) => {
     .populate('creator participants.user')
     .exec((err, record) => {
         if (err) res.json({err})
-        // console.log('Detail Meetup success');
-        // console.log(record);
         record.status = 'upcoming'
         record.save((error, data) => {
             if (error) res.json({error})
             res.json(data)
-            // console.log('++++: ', data)
         })
     })
-}
+} //finalizeMeetup
 
 methods.deleteMeetupById = (req, res) => {
     Meetup.findByIdAndRemove(req.params.id, (err, record) => {
         if (err) res.json({err})
-        // console.log('Delete Meetup success');
-        // console.log(record);
 
         res.json(record)
     })

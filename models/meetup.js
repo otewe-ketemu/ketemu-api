@@ -4,10 +4,17 @@ const Schema = mongoose.Schema
 let meetupSchema = new Schema({
     title: String,
     description: String,
-    time: Date,
+    meetingTime: Date,
+    confirmationTime: Date,
     typePlaces: {
         type: String,
         enum: ['coworking_space', 'library', 'bar', 'cafe', 'shopping_mall', 'restaurant', 'park', 'lodging']
+    },
+    placeAddressName: String,
+    placeAddressGeolocation: {
+        type: [Number],
+        index: '2d',
+        sparse: true
     },
     creator: {
       type: Schema.Types.ObjectId,
