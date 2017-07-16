@@ -32,28 +32,49 @@ methods.signUp = (req, res) => {
 
 methods.signIn = (req, res) => {
   let pwd = req.body.password
-  User.findOne({
-    username: req.body.username
-  })
-  .then(record => {
-    if (bCrypt.compareSync(pwd, record.password)) {
-      let token = jwt.sign({
-        id: record._id,
-        username: record.username,
-        email: record.email
-      }, process.env.SECRET_KEY, { expiresIn: '1d'})
+
+  if (req.body.username.length === 0) {
+    res.json({
+      status: false,
+      message: 'Username is required!'
+    })
+  } else {
+    User.findOne({
+      username: req.body.username
+    })
+    .then(record => {
+      if (pwd.length === 0) {
+        res.json({
+          status: false,
+          message: 'Password is required!'
+        })
+      } else {
+        if (bCrypt.compareSync(pwd, record.password)) {
+          let token = jwt.sign({
+            id: record._id,
+            username: record.username,
+            email: record.email
+          }, process.env.SECRET_KEY, { expiresIn: '1d'})
+          res.json({
+            message: 'SignIn success',
+            id: record._id,
+            username: record.username,
+            token
+          })
+        } else {
+          res.json({
+            message: 'Please input the correct password!'
+          })
+        }
+      }
+    })
+    .catch(error => {
       res.json({
-        message: 'SignIn success',
-        id: record._id,
-        username: record.username,
-        token
+        status: false,
+        message: 'Please input the correct username!'
       })
-    } else {
-      res.json({
-        message: "Your password don't match"
-      })
-    }
-  })
+    })
+  }
 } //signin biasa
 
 methods.getAllUsers = (req, res) => {
