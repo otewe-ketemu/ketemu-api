@@ -12,13 +12,10 @@ methods.signUp = (req, res) => {
     password: bCrypt.hashSync(pwd, saltRounds),
     email: req.body.email
   })
-  // console.log('password: *** ', newUser.password)
   if (pwd.length >= 5) {
     newUser.save((err, data) => {
       if (err) res.json({err})
-      
-      // console.log('SignUp success');
-      // console.log(data);
+
       res.json({
         status: true,
         data
@@ -31,12 +28,6 @@ methods.signUp = (req, res) => {
     })
   }
 
-  // newUser.save((err, data) => {
-  //   if (err) res.json({err})
-  //   console.log('SignUp success');
-  //   console.log(data);;
-  //   res.send(data)
-  // })
 } //signup
 
 methods.signIn = (req, res) => {
@@ -45,16 +36,12 @@ methods.signIn = (req, res) => {
     username: req.body.username
   })
   .then(record => {
-    // console.log('Record data user login');
-    // console.log(record);
-    // console.log(bCrypt.compareSync(pwd, record.password));
     if (bCrypt.compareSync(pwd, record.password)) {
       let token = jwt.sign({
         id: record._id,
         username: record.username,
         email: record.email
       }, process.env.SECRET_KEY, { expiresIn: '1d'})
-      // console.log('token login: '+token);
       res.json({
         message: 'SignIn success',
         id: record._id,
@@ -72,8 +59,6 @@ methods.signIn = (req, res) => {
 methods.getAllUsers = (req, res) => {
   User.find({}, (err, records) => {
     if (err) res.json({err})
-    // console.log('Data all user success');
-    // console.log(records);
     res.json(records)
   })
 } // getAllUser
@@ -81,8 +66,6 @@ methods.getAllUsers = (req, res) => {
 methods.getUserById = (req, res) => {
   User.findById(req.params.id, (err, record) => {
     if (err) res.json({err})
-    // console.log('Detail User success');
-    // console.log(record);
     res.json(record)
   })
 } //getUserById
@@ -90,8 +73,6 @@ methods.getUserById = (req, res) => {
 methods.getHomeAddressGeolocation = (req, res) => {
   User.findById(req.params.id, (err, record) => {
     if (err) res.json({err})
-    // console.log('Detail User success');
-    // console.log(record.homeAddressGeolocation);
     res.json(record.homeAddressGeolocation)
   })
 } //getHomeAddressGeolocation
@@ -99,8 +80,6 @@ methods.getHomeAddressGeolocation = (req, res) => {
 methods.getOfficeAddressGeolocation = (req, res) => {
   User.findById(req.params.id, (err, record) => {
     if (err) res.json({err})
-    // console.log('Detail User success');
-    // console.log(record);
     res.json(record.officeAddressGeolocation)
   })
 } //getOfficeAddressGeolocation
@@ -110,9 +89,6 @@ methods.editUser = (req, res) => {
     User.findById(req.params.id)
     .exec((error, response) => {
       if (error) res.json({error})
-      // console.log(response._id);
-      // console.log('Masuk gakkk: '+ req.body.name);
-      // console.log('pwd hash di editUser:  '+bCrypt.hashSync(pwdUser, saltRounds));
       User.findByIdAndUpdate({
         "_id": response._id
       }, {
@@ -121,6 +97,7 @@ methods.editUser = (req, res) => {
           "username": req.body.username || response.username,
           "password": bCrypt.hashSync(pwdUser, saltRounds) || response.password,
           "email": req.body.email || response.email,
+          "avatarURL": req.body.avatarURL || response.avatarURL,
           "homeAddressName": req.body.homeAddressName || response.homeAddressName,
           "homeAddressGeolocation": req.body.homeAddressGeolocation || response.homeAddressGeolocation,
           "officeAddressName": req.body.officeAddressName || response.officeAddressName,
@@ -133,7 +110,6 @@ methods.editUser = (req, res) => {
       .exec((err, result) => {
         if (err) res.json({err})
         res.json(result)
-        // console.log('edit user success');
       })
     })
 } //editUser
@@ -141,8 +117,6 @@ methods.editUser = (req, res) => {
 methods.deleteUserById = (req, res) => {
     User.findByIdAndRemove(req.params.id, (err, record) => {
       if (err) res.json({err})
-      // console.log('Delete user success');
-      // console.log(record);
       res.json(record)
     })
 } //deleteUser
