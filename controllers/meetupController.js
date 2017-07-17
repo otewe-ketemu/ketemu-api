@@ -47,6 +47,14 @@ methods.getDetailMeetup = (req, res) => {
     })
 } //getDetailMeetup
 
+methods.getMeetupByParticipant = (req, res) => {
+  Meetup.find({$or: [{"creator": req.params.id}, {"participants.user": req.params.id}]})
+    .exec((error, response) => {
+      if(error) res.json({error})
+      res.json(response)
+    })
+}
+
 methods.editMeetup = (req, res) => {
     Meetup.findById(req.params.id)
     .exec((error, response) => {

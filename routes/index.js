@@ -24,6 +24,7 @@ router.delete('/deleteuser/:id', userController.deleteUserById)
 router.post('/createmeetup', meetupController.createMeetup)
 router.get('/allmeetup', meetupController.getAllMeetup)
 router.get('/detailmeetup/:id', meetupController.getDetailMeetup)
+router.get('/getmeetingsbyparticipant/:id', meetupController.getMeetupByParticipant)
 router.put('/editmeetup/:id', meetupController.editMeetup)  // password harus disertakan
 router.put('/updatepartipants/:id', meetupController.updateParticipants)
 router.put('/finalizemeetup/:id', meetupController.finalizeMeetup)
