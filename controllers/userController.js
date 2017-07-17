@@ -6,28 +6,74 @@ let methods = {}
 
 methods.signUp = (req, res) => {
   let pwd = req.body.password
-  let newUser = new User({
-    name: req.body.name,
-    username: req.body.username,
-    password: bCrypt.hashSync(pwd, saltRounds),
-    email: req.body.email
-  })
-  if (pwd.length >= 5) {
-    newUser.save((err, data) => {
-      if (err) res.json({err})
 
-      res.json({
-        status: true,
-        data
-      })
-    })
-  } else {
+  if (req.body.name.length === 0) {
     res.json({
       status: false,
-      message: 'Password length min 5 character'
+      message: 'Name is required!'
+    })
+  } else if (req.body.username.length === 0) {
+    res.json({
+      status: false,
+      message: 'Username is required!'
+    })
+  } else if (req.body.username.length < 5) {
+    res.json({
+      status: false,
+      message: 'Minimal Username length is 5 characters!'
+    })
+  } else if (req.body.password.length === 0) {
+    res.json({
+      status: false,
+      message: 'Password is required!'
+    })
+  } else if (req.body.password.length < 5) {
+    res.json({
+      status: false,
+      message: 'Minimal Password length is 5 characters!'
+    })
+  } else if (req.body.email.length === 0) {
+    res.json({
+      status: false,
+      message: 'Email is required!'
+    })
+  } else {
+    User.findOne({email: req.body.email}, (err, result) => {
+      console.log('?????? : ', result)
+
+      if (result.email == null) {
+        User.findOne({username: req.body.username}, (error, record) => {
+          console.log('---------: ', record.username)
+          console.log('---------: ', req.body.username)
+          if (record.username == req.body.username){
+            res.json({
+              status: false,
+              message: 'Username is already used!'
+            })
+          } else if (error === null) {
+            let newUser = new User({
+              name: req.body.name,
+              username: req.body.username,
+              password: bCrypt.hashSync(pwd, saltRounds),
+              email: req.body.email
+            })
+            newUser.save((err, data) => {
+              if (err) res.json({err})
+              res.json({
+                status: true,
+                data
+              })
+            })
+          }
+        })
+      } else {
+        res.json({
+          status: false,
+          message: 'Email is already used!'
+        })
+      }
     })
   }
-
 } //signup
 
 methods.signIn = (req, res) => {
@@ -148,7 +194,7 @@ methods.updateAvatarUrl = (req, res) => {
     if(err) res.json({err})
     record.avatarURL = req.body.avatar
     record.save((error, data) => {
-      console.log('AVATAR di CONTROLLER ***', data);
+      // console.log('AVATAR di CONTROLLER ***', data);
       res.json(data)
     })
   })
