@@ -143,4 +143,24 @@ methods.deleteMeetupById = (req, res) => {
     })
 } //deleteMeetup
 
+methods.setParticipantRSVP = (req, res) => {
+  Meetup.findById(req.params.id, (err, record) => {
+    console.log(record)
+    record.participants = record.participants.map((participant) => {
+      console.log('participant: ', participant)
+      console.log('body id: ', req.body.id)
+      if (participant.user == req.body.id) {
+        participant.status = req.body.status
+
+      }
+      return participant
+    })
+    console.log(record.participants)
+    record.save((err, data) => {
+      if (err) res.json({err})
+      res.json(data)
+    })
+  })
+}
+
 module.exports = methods
