@@ -32,7 +32,7 @@ let meetupSchema = new Schema({
       locationName: {
         type: String,
         default: ''
-      }
+      },
       locationGeolocation: {
         type: [Number],
         index: '2d',
