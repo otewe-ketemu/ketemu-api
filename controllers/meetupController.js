@@ -48,7 +48,13 @@ methods.getDetailMeetup = (req, res) => {
 } //getDetailMeetup
 
 methods.getMeetupByParticipant = (req, res) => {
-  Meetup.find({$or: [{"creator": req.params.id}, {"participants.user": req.params.id}]})
+  Meetup.find({$or: [
+    {"creator": req.params.id},
+    {$and: [
+      {"participants.user": req.params.id},
+      {"participants.status": {$ne: 'no'}},
+    ]}
+  ]})
     .exec((error, response) => {
       if(error) res.json({error})
       res.json(response)
@@ -145,10 +151,7 @@ methods.deleteMeetupById = (req, res) => {
 
 methods.setParticipantRSVP = (req, res) => {
   Meetup.findById(req.params.id, (err, record) => {
-    console.log(record)
     record.participants = record.participants.map((participant) => {
-      console.log('participant: ', participant)
-      console.log('body id: ', req.body.id)
       if (participant.user == req.body.id) {
         participant.status = req.body.status
 
