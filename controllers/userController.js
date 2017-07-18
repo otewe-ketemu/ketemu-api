@@ -137,6 +137,23 @@ methods.getUserById = (req, res) => {
   })
 } //getUserById
 
+methods.getUserByUsername = (req, res) => {
+  User.findOne({username: req.params.username}, (err, result) => {
+    console.log('sasasa: ', result)
+    if (result == null) {
+      res.json({
+        status: true,
+        message: 'Success!'
+      })
+    } else {
+      res.json({
+        status: false,
+        message: 'Username has already exists!'
+      })
+    }
+  })
+} //getUserById
+
 methods.getHomeAddressGeolocation = (req, res) => {
   User.findById(req.params.id, (err, record) => {
     if (err) res.json({err})
