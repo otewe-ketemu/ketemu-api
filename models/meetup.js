@@ -28,6 +28,15 @@ let meetupSchema = new Schema({
       status: {
         type: String,
         default: 'pending'
+      },
+      locationName: {
+        type: String,
+        default: ''
+      }
+      locationGeolocation: {
+        type: [Number],
+        index: '2d',
+        sparse: true
       }
     }],
     status: {
