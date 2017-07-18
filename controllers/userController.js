@@ -39,18 +39,18 @@ methods.signUp = (req, res) => {
     })
   } else {
     User.findOne({email: req.body.email}, (err, result) => {
-      console.log('?????? : ', result)
+      // console.log('?????? : ', result)
 
-      if (result.email == null) {
+      if (result === null) {
+        console.log('---------: ', req.body.username)
         User.findOne({username: req.body.username}, (error, record) => {
-          console.log('---------: ', record.username)
-          console.log('---------: ', req.body.username)
-          if (record.username == req.body.username){
+          // console.log('---------: ', record.username)
+          if (error) {
             res.json({
               status: false,
-              message: 'Username is already used!'
+              message: 'SASASASAS'
             })
-          } else if (error === null) {
+          } else if (record === null) {
             let newUser = new User({
               name: req.body.name,
               username: req.body.username,
@@ -63,6 +63,11 @@ methods.signUp = (req, res) => {
                 status: true,
                 data
               })
+            })
+          } else {
+            res.json({
+              status: false,
+              message: 'Username is already used!'
             })
           }
         })
