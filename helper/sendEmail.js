@@ -30,14 +30,18 @@ function sendEmail(data, done){
 methods.firstCreateMeetup = (record) => {
   console.log('USER: ', record)
 
-
-
   let date = new Date(record.createdDate)
   let s = date.getMinutes()
   let h = date.getHours()
   let d = date.getDate()
   let m = date.getMonth()
   let e = date.getDay()
+
+  console.log('1. getMinutes: ', s)
+  console.log('2. getHours: ', h)
+  console.log('3. getDate: ', d)
+  console.log('4. getMonth: ', m)
+  console.log('5. getDay: ', e)
 
   new CronJob(`00 ${s+1} ${h} ${d} ${m} ${e}`, function() {
 
@@ -84,7 +88,7 @@ methods.confirmationTime = (record) => {
     recordEmail.push(participant.user.email)
   })
 
-  console.log('EMAILLLLL : ', recordEmail)
+  // console.log('EMAILLLLL : ', recordEmail)
 
   // setup email data with unicode symbols
   let mailOptions = {
