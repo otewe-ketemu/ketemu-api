@@ -1,5 +1,6 @@
 const Meetup = require('../models/meetup')
 let methods = {}
+let helpers = require('../helper/sendEmail')
 
 methods.createMeetup = (req, res) => {
     let newMeetup = new Meetup({
@@ -23,7 +24,9 @@ methods.createMeetup = (req, res) => {
         Meetup.findById(data._id)
         .populate('creator participants.user')
         .exec((err, record) => {
+          console.log('Masukkkkkkkkk');
             if (err) res.json({err})
+            helpers.firstCreateMeetup(record)
             res.json(record)
         })
     })
