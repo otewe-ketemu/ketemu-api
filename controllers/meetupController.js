@@ -55,6 +55,7 @@ methods.getMeetupByParticipant = (req, res) => {
       {"participants.status": {$ne: 'no'}},
     ]}
   ]})
+    .populate('creator participants.user')
     .exec((error, response) => {
       if(error) res.json({error})
       res.json(response)
