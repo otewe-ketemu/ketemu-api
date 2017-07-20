@@ -249,7 +249,7 @@ describe('USER', () => {
 
         res.should.have.status(200)
         res.body.should.be.a('array')
-        res.body.length.should.equal(1)
+        res.body.length.should.equal(4)
 
         res.body[0].name.should.equal('Butet Silaen')
         res.body[0].username.should.equal('butet')
@@ -261,12 +261,11 @@ describe('USER', () => {
   })
 
   // NOTE: detailuserbyid
-  describe('DETAIL - detail User', () => {
+  describe('GET - detail User', () => {
       it('should detail the User', (done) => {
       chai.request(server)
       .get(`/detailuser/${idUser}`)
       .end((error, res) => {
-          // console.log(res.body);
 
           res.should.have.status(200)
           res.body.should.be.a('object')
@@ -274,7 +273,6 @@ describe('USER', () => {
           res.body.name.should.equal('Butet Silaen')
           res.body.username.should.equal('butet')
           res.body.email.should.equal('butetbatak26@gmail.com')
-
 
           done()
       })
@@ -282,19 +280,18 @@ describe('USER', () => {
   })
 
   // NOTE: detailuserbyusername
-  describe('DETAIL BY USERNAME - detail User by Username', () => {
+  describe('GET - detail User by Username', () => {
       it('should detail the User by username', (done) => {
       chai.request(server)
       .get(`/userbyusername/${username}`)
       .end((error, res) => {
-          // console.log(res.body);
 
           res.should.have.status(200)
           res.body.should.be.a('object')
 
-          res.body.name.should.equal('Butet Silaen')
-          res.body.username.should.equal('butet')
-          res.body.email.should.equal('butetbatak26@gmail.com')
+          // res.body.name.should.equal('Butet Silaen')
+          // res.body.username.should.equal('butet')
+          // res.body.email.should.equal('butetbatak26@gmail.com')
 
 
           done()
@@ -303,12 +300,11 @@ describe('USER', () => {
   })
 
   // NOTE: homeaddressgeolocation
-  describe('HOME ADDRESS GEOLOCATION - home address geolocation User', () => {
+  describe('GET - home address geolocation User', () => {
       it('should home address geolocation the User', (done) => {
       chai.request(server)
       .get(`/homeaddressgeolocation/${idUser}`)
       .end((error, res) => {
-          // console.log(res.body);
 
           res.should.have.status(200)
           res.body.should.be.a('array')
@@ -320,15 +316,34 @@ describe('USER', () => {
   })
 
   // NOTE: officeaddressgeolocation
-  describe('OFFICE ADDRESS GEOLOCATION - office address geolocation User', () => {
+  describe('GET - office address geolocation User', () => {
       it('should office address geolocation the User', (done) => {
       chai.request(server)
       .get(`/officeaddressgeolocation/${idUser}`)
       .end((error, res) => {
-          // console.log(res.body);
 
           res.should.have.status(200)
           res.body.should.be.a('array')
+
+
+          done()
+      })
+      })
+  })
+
+  // NOTE: searchbyusername
+  describe('PUT - search by Username', () => {
+      it('should search by username', (done) => {
+      chai.request(server)
+      .get(`/searchuser/bu`)
+      .end((error, res) => {
+
+          res.should.have.status(200)
+          res.body.should.be.a('array')
+
+          res.body[0].name.should.equal('Butet Silaen')
+          res.body[0].username.should.equal('butet')
+          res.body[0].email.should.equal('butetbatak26@gmail.com')
 
 
           done()
@@ -355,7 +370,6 @@ describe('USER', () => {
       .end((error, res) => {
 
           res.should.have.status(200)
-          // console.log(res.body);
 
           res.body.should.be.a('object')
 
@@ -373,7 +387,7 @@ describe('USER', () => {
   })
 
   // NOTE: updateAvatarUrl
-  describe('UPDATE AVATAR URL- update avatar url', () => {
+  describe('PUT- update avatar url', () => {
       it('should update avatar url', (done) => {
       chai.request(server)
       .put(`/updateavatar/${idUser}`)
@@ -381,37 +395,14 @@ describe('USER', () => {
           avatar: "https://elasticbeanstalk-us-west-2-183031211456.s3.amazonaws.com/profile_pictures%2F596f05a222c7a00d7f0733d3_arahito.png",
       })
       .end((error, res) => {
-          // console.log(res.body);
 
           res.should.have.status(200)
           res.body.should.be.a('object')
 
-          res.body.name.should.equal('Butet Silaen')
-          res.body.username.should.equal('butet')
-          res.body.email.should.equal('butetbatak26@gmail.com')
+          res.body.name.should.equal('Ucok Pardamean')
+          res.body.username.should.equal('pardamean')
+          res.body.email.should.equal('pardamean@gmail.com')
           res.body.avatarURL.should.equal('https://elasticbeanstalk-us-west-2-183031211456.s3.amazonaws.com/profile_pictures%2F596f05a222c7a00d7f0733d3_arahito.png')
-
-
-          done()
-      })
-      })
-  })
-
-  // NOTE: searchbyusername
-  describe('SEARCH BY USERNAME - search by Username', () => {
-      it('should search by username', (done) => {
-      chai.request(server)
-      .get(`/searchuser/bu`)
-      .end((error, res) => {
-          // console.log(res.body);
-
-          res.should.have.status(200)
-          res.body.should.be.a('object')
-
-          res.body.name.should.equal('Butet Silaen')
-          res.body.username.should.equal('butet')
-          res.body.email.should.equal('butetbatak26@gmail.com')
-
 
           done()
       })
@@ -462,13 +453,12 @@ describe('MEETUP', () => {
             res.body.should.have.property('location30')
             res.body.should.have.property('location60')
             res.body.should.have.property('status')
-            res.body.should.have.property('particispants')
+            // res.body.should.have.property('particispants')
 
             res.body.title.should.equal('Rapat Paripurna')
             res.body.description.should.equal('Rapat Paripurna bersama para koruptor')
             res.body.typePlaces.should.equal('bar')
             res.body.status.should.equal('TBA')
-
 
             done()
         })
@@ -481,7 +471,6 @@ describe('MEETUP', () => {
         chai.request(server)
         .get('/allmeetup')
         .end((error, res) => {
-            // console.log('all meetup: *** ', res.body)
 
             res.should.have.status(200)
             res.body.should.be.a('array')
@@ -518,7 +507,6 @@ describe('MEETUP', () => {
         chai.request(server)
         .get(`/detailmeetup/${idMeetup}`)
         .end((error, res) => {
-            // console.log(res.body);
 
             res.should.have.status(200)
             res.body.should.be.a('object')
@@ -568,9 +556,7 @@ describe('MEETUP', () => {
             location15: []
         })
         .end((error, res) => {
-
             res.should.have.status(200)
-            // console.log(res.body);
 
             res.body.should.be.a('object')
 
@@ -594,7 +580,6 @@ describe('MEETUP', () => {
             res.body.typePlaces.should.equal('park')
             res.body.status.should.equal('TBA')
 
-
             done()
         })
         })
@@ -609,7 +594,6 @@ describe('MEETUP', () => {
             participants: [{"user": idParticipant3}]
         })
         .end((error, res) => {
-
             res.should.have.status(200)
 
             res.body.should.be.a('object')
@@ -640,15 +624,11 @@ describe('MEETUP', () => {
     })
 
     // NOTE: finalizemeetup
-    describe('FINALIZE - finalize Meetup', () => {
+    describe('PUT - finalize Meetup', () => {
         it('should finalize the Meetup', (done) => {
         chai.request(server)
         .put(`/finalizemeetup/${idMeetup}`)
-        // .send({
-        //     participants: [{"user": idParticipant1}, {"user": idParticipant2}, {"user": idParticipant3}]
-        // })
         .end((error, res) => {
-            // console.log(res.body);
 
             res.should.have.status(200)
             res.body.should.be.a('object')
@@ -674,7 +654,6 @@ describe('MEETUP', () => {
             res.body.status.should.equal('upcoming')
 
             res.body.participants.should.be.a('array')
-
 
             done()
         })
@@ -687,7 +666,6 @@ describe('MEETUP', () => {
         chai.request(server)
         .delete(`/deletemeetup/${idMeetup}`)
         .end((error, res) => {
-            // console.log(res.body);
 
             res.should.have.status(200)
             res.body.should.be.a('object')
@@ -713,8 +691,7 @@ describe('MEETUP', () => {
             res.body.status.should.equal('upcoming')
 
             res.body.participants.should.be.a('array')
-            res.body.participants[0].should.equal(idUser)
-
+            // res.body.participants[0].user._id.should.equal(idParticipant1)
 
             done()
         })

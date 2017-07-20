@@ -26,7 +26,6 @@ methods.createMeetup = (req, res) => {
         Meetup.findById(data._id)
         .populate('creator participants.user')
         .exec((err, record) => {
-          console.log('Masukkkkkkkkk');
             if (err) res.json({err})
             helpers.firstCreateMeetup(record)
             res.json(record)
@@ -111,7 +110,6 @@ methods.updateParticipants = (req, res) => {
     .exec((err, record) => {
         if (err) res.json({err})
         record.participants.push({user: req.body.user, status: 'pending'})
-        console.log('.......: ', record)
         record.save((err, data) => {
             Meetup.findById(req.params.id)
                 .populate('creator participants.user')
@@ -165,7 +163,6 @@ methods.setParticipantRSVP = (req, res) => {
       }
       return participant
     })
-    console.log(record.participants)
     record.save((err, data) => {
       if (err) res.json({err})
       res.json(data)
@@ -182,7 +179,6 @@ methods.setParticipantLocation = (req, res) => {
       }
       return participant
     })
-    console.log(record.participants)
     record.save((err, data) => {
       if (err) res.json({err})
       res.json(data)
