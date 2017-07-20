@@ -39,12 +39,8 @@ methods.signUp = (req, res) => {
     })
   } else {
     User.findOne({email: req.body.email}, (err, result) => {
-      // console.log('?????? : ', result)
-
       if (result === null) {
-        console.log('---------: ', req.body.username)
         User.findOne({username: req.body.username}, (error, record) => {
-          // console.log('---------: ', record.username)
           if (error) {
             res.json({
               status: false,
@@ -144,7 +140,6 @@ methods.getUserById = (req, res) => {
 
 methods.getUserByUsername = (req, res) => {
   User.findOne({username: req.params.username}, (err, result) => {
-    console.log('sasasa: ', result)
     if (result == null) {
       res.json({
         status: true,
@@ -216,7 +211,6 @@ methods.updateAvatarUrl = (req, res) => {
     if(err) res.json({err})
     record.avatarURL = req.body.avatar
     record.save((error, data) => {
-      // console.log('AVATAR di CONTROLLER ***', data);
       res.json(data)
     })
   })
