@@ -1,6 +1,5 @@
 const Meetup = require('../models/meetup')
 let methods = {}
-let helpers = require('../helper/sendEmail')
 
 methods.createMeetup = (req, res) => {
   let newMeetup = new Meetup({
@@ -27,7 +26,6 @@ methods.createMeetup = (req, res) => {
         .populate('creator participants.user')
         .exec((err, record) => {
             if (err) res.json({err})
-            helpers.firstCreateMeetup(record)
             res.json(record)
         })
     })
@@ -159,7 +157,6 @@ methods.setParticipantRSVP = (req, res) => {
     record.participants = record.participants.map((participant) => {
       if (participant.user == req.body.id) {
         participant.status = req.body.status
-
       }
       return participant
     })
