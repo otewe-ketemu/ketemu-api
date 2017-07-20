@@ -174,7 +174,7 @@ methods.setParticipantLocation = (req, res) => {
     record.participants = record.participants.map((participant) => {
       if (participant.user == req.body.id) {
         participant.locationName = req.body.locationName
-        participant.locationGeolocation = req.body.Geolocation
+        participant.locationGeolocation = req.body.locationGeolocation
       }
       return participant
     })
