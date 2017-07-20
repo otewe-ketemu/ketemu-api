@@ -32,5 +32,6 @@ router.put('/finalizemeetup/:id', meetupController.finalizeMeetup)
 router.put('/cancelmeetup/:id', meetupController.cancelMeetup)
 router.delete('/deletemeetup/:id', meetupController.deleteMeetupById)
 router.put('/confirmattendance/:id', meetupController.setParticipantRSVP)
+router.put('/participantlocation/:id', meetupController.setParticipantLocation)
 
 module.exports = router
