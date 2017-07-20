@@ -1,5 +1,6 @@
 const Meetup = require('../models/meetup')
 let methods = {}
+let helpers = require('../helper/sendEmail')
 
 methods.createMeetup = (req, res) => {
   let newMeetup = new Meetup({
@@ -22,13 +23,15 @@ methods.createMeetup = (req, res) => {
   newMeetup.save((err, data) => {
     if (err) res.json({err})
 
-    Meetup.findById(data._id)
-      .populate('creator participants.user')
-      .exec((err, record) => {
-        if (err) res.json({err})
-        res.json(record)
-      })
-  })
+        Meetup.findById(data._id)
+        .populate('creator participants.user')
+        .exec((err, record) => {
+          console.log('Masukkkkkkkkk');
+            if (err) res.json({err})
+            helpers.firstCreateMeetup(record)
+            res.json(record)
+        })
+    })
 } //createMeetup
 
 methods.getAllMeetup = (req, res) => {
@@ -106,16 +109,17 @@ methods.updateParticipants = (req, res) => {
   Meetup.findById(req.params.id)
     .populate('creator participants.user')
     .exec((err, record) => {
-      if (err) res.json({err})
-      record.participants.push(req.body.participants)
-      record.save(err => {
-        Meetup.findById(req.params.id)
-          .populate('creator participants.user')
-          .exec((err, record) => {
-            if (err) res.json({err})
-            res.json(record)
-          })
-      })
+        if (err) res.json({err})
+        record.participants.push({user: req.body.user, status: 'pending'})
+        console.log('.......: ', record)
+        record.save((err, data) => {
+            Meetup.findById(req.params.id)
+                .populate('creator participants.user')
+                .exec((err, record) => {
+                    if (err) res.json({err})
+                    res.json(record)
+                })
+        })
     })
 } //editParticipants
 
