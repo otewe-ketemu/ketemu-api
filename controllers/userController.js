@@ -39,6 +39,7 @@ methods.signUp = (req, res) => {
     })
   } else {
     User.findOne({email: req.body.email}, (err, result) => {
+
       if (result === null) {
         User.findOne({username: req.body.username}, (error, record) => {
           if (error) {

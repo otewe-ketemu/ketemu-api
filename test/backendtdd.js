@@ -368,6 +368,7 @@ describe('USER', () => {
 
   // NOTE: detailuserbyid
   describe('GET - detail User', () => {
+
     it('should detail the User', (done) => {
       chai.request(server)
       .get(`/detailuser/${idUser}`)
@@ -387,6 +388,7 @@ describe('USER', () => {
 
   // NOTE: detailuserbyusername
   describe('GET - detail User by Username', () => {
+
     it('should detail the User by username', (done) => {
       chai.request(server)
       .get(`/userbyusername/${username}`)
@@ -406,10 +408,14 @@ describe('USER', () => {
 
   // NOTE: homeaddressgeolocation
   describe('GET - home address geolocation User', () => {
-    it('should home address geolocation the User', (done) => {
+
+      it('should home address geolocation the User', (done) => {
       chai.request(server)
       .get(`/homeaddressgeolocation/${idUser}`)
       .end((error, res) => {
+
+        res.should.have.status(200)
+        res.body.should.be.a('array')
 
         res.should.have.status(200)
         res.body.should.be.a('array')
@@ -421,6 +427,7 @@ describe('USER', () => {
 
   // NOTE: officeaddressgeolocation
   describe('GET - office address geolocation User', () => {
+
     it('should office address geolocation the User', (done) => {
       chai.request(server)
       .get(`/officeaddressgeolocation/${idUser}`)
@@ -431,6 +438,25 @@ describe('USER', () => {
 
         done()
       })
+    })
+  })
+
+  // NOTE: searchbyusername
+  describe('PUT - search by Username', () => {
+    it('should search by username', (done) => {
+    chai.request(server)
+    .get(`/searchuser/bu`)
+    .end((error, res) => {
+
+      res.should.have.status(200)
+      res.body.should.be.a('array')
+
+      res.body[0].name.should.equal('Butet Silaen')
+      res.body[0].username.should.equal('butet')
+      res.body[0].email.should.equal('butetbatak26@gmail.com')
+
+      done()
+    })
     })
   })
 
@@ -470,8 +496,9 @@ describe('USER', () => {
   })
 
   // NOTE: updateAvatarUrl
-  describe('PUT - update avatar url', () => {
-    it('should update avatar url', (done) => {
+
+  describe('PUT- update avatar url', () => {
+      it('should update avatar url', (done) => {
       chai.request(server)
       .put(`/updateavatar/${idUser}`)
       .send({
@@ -479,38 +506,20 @@ describe('USER', () => {
       })
       .end((error, res) => {
 
-        res.should.have.status(200)
-        res.body.should.be.a('object')
 
-        res.body.name.should.equal('Butet Silaen')
-        res.body.username.should.equal('butet')
-        res.body.email.should.equal('butetbatak26@gmail.com')
-        res.body.avatarURL.should.equal('https://elasticbeanstalk-us-west-2-183031211456.s3.amazonaws.com/profile_pictures%2F596f05a222c7a00d7f0733d3_arahito.png')
+          res.should.have.status(200)
+          res.body.should.be.a('object')
 
-        done()
+          res.body.name.should.equal('Ucok Pardamean')
+          res.body.username.should.equal('pardamean')
+          res.body.email.should.equal('pardamean@gmail.com')
+          res.body.avatarURL.should.equal('https://elasticbeanstalk-us-west-2-183031211456.s3.amazonaws.com/profile_pictures%2F596f05a222c7a00d7f0733d3_arahito.png')
+
+          done()
       })
     })
   })
-
-  // NOTE: searchbyusername
-  describe('GET - search by Username', () => {
-    it('should search by username', (done) => {
-      chai.request(server)
-      .get(`/searchuser/bu`)
-      .end((error, res) => {
-
-        res.should.have.status(200)
-        res.body.should.be.a('object')
-
-        res.body.name.should.equal('Butet Silaen')
-        res.body.username.should.equal('butet')
-        res.body.email.should.equal('butetbatak26@gmail.com')
-
-        done()
-      })
-    })
-  })
-
+  
 })
 
 // NOTE: MEETUP
@@ -537,7 +546,7 @@ describe('MEETUP', () => {
         participants: [{"user": idParticipant1}, {"user": idParticipant2}]
       })
       .end((error, res) => {
-
+        
         idMeetup = res.body._id
 
         res.should.have.status(200)
@@ -567,236 +576,237 @@ describe('MEETUP', () => {
     })
   })
 
-    // NOTE: allmeetup
-    describe('GET - all Meetup', () => {
-      it('should get all Meetup', (done) => {
-        chai.request(server)
-        .get('/allmeetup')
-        .end((error, res) => {
+  // NOTE: allmeetup
+  describe('GET - all Meetup', () => {
+    it('should get all Meetup', (done) => {
+      chai.request(server)
+      .get('/allmeetup')
+      .end((error, res) => {
 
-          res.should.have.status(200)
-          res.body.should.be.a('array')
-          res.body.length.should.equal(1)
+        res.should.have.status(200)
+        res.body.should.be.a('array')
+        res.body.length.should.equal(1)
 
-          res.body[0].should.have.property('title')
-          res.body[0].should.have.property('description')
-          res.body[0].should.have.property('meetingTime')
-          res.body[0].should.have.property('confirmationTime')
-          res.body[0].should.have.property('typePlaces')
-          res.body[0].should.have.property('creator')
-          res.body[0].should.have.property('_id')
-          res.body[0].should.have.property('updatedDate')
-          res.body[0].should.have.property('createdDate')
-          res.body[0].should.have.property('location15')
-          res.body[0].should.have.property('location30')
-          res.body[0].should.have.property('location60')
-          res.body[0].should.have.property('status')
-          res.body[0].should.have.property('participants')
+        res.body[0].should.have.property('title')
+        res.body[0].should.have.property('description')
+        res.body[0].should.have.property('meetingTime')
+        res.body[0].should.have.property('confirmationTime')
+        res.body[0].should.have.property('typePlaces')
+        res.body[0].should.have.property('creator')
+        res.body[0].should.have.property('_id')
+        res.body[0].should.have.property('updatedDate')
+        res.body[0].should.have.property('createdDate')
+        res.body[0].should.have.property('location15')
+        res.body[0].should.have.property('location30')
+        res.body[0].should.have.property('location60')
+        res.body[0].should.have.property('status')
+        res.body[0].should.have.property('participants')
 
-          res.body[0].title.should.equal('Rapat Paripurna')
-          res.body[0].description.should.equal('Rapat Paripurna bersama para koruptor')
-          res.body[0].typePlaces.should.equal('bar')
-          res.body[0].status.should.equal('TBA')
+        res.body[0].title.should.equal('Rapat Paripurna')
+        res.body[0].description.should.equal('Rapat Paripurna bersama para koruptor')
+        res.body[0].typePlaces.should.equal('bar')
+        res.body[0].status.should.equal('TBA')
 
-          done()
-        })
+        done()
       })
     })
+  })
 
-    // NOTE: detailmeetup
-    describe('GET - detail Meetup', () => {
-      it('should detail the Meetup', (done) => {
-        chai.request(server)
-        .get(`/detailmeetup/${idMeetup}`)
-        .end((error, res) => {
+  // NOTE: detailmeetup
+  describe('GET - detail Meetup', () => {
+    it('should detail the Meetup', (done) => {
+      chai.request(server)
+      .get(`/detailmeetup/${idMeetup}`)
+      .end((error, res) => {
 
-          res.should.have.status(200)
-          res.body.should.be.a('object')
+        res.should.have.status(200)
+        res.body.should.be.a('object')
 
-          res.body.should.have.property('title')
-          res.body.should.have.property('description')
-          res.body.should.have.property('meetingTime')
-          res.body.should.have.property('confirmationTime')
-          res.body.should.have.property('typePlaces')
-          res.body.should.have.property('creator')
-          res.body.should.have.property('_id')
-          res.body.should.have.property('updatedDate')
-          res.body.should.have.property('createdDate')
-          res.body.should.have.property('location15')
-          res.body.should.have.property('location30')
-          res.body.should.have.property('location60')
-          res.body.should.have.property('status')
-          res.body.should.have.property('participants')
+        res.body.should.have.property('title')
+        res.body.should.have.property('description')
+        res.body.should.have.property('meetingTime')
+        res.body.should.have.property('confirmationTime')
+        res.body.should.have.property('typePlaces')
+        res.body.should.have.property('creator')
+        res.body.should.have.property('_id')
+        res.body.should.have.property('updatedDate')
+        res.body.should.have.property('createdDate')
+        res.body.should.have.property('location15')
+        res.body.should.have.property('location30')
+        res.body.should.have.property('location60')
+        res.body.should.have.property('status')
+        res.body.should.have.property('participants')
 
-          res.body.title.should.equal('Rapat Paripurna')
-          res.body.description.should.equal('Rapat Paripurna bersama para koruptor')
-          res.body.typePlaces.should.equal('bar')
-          res.body.status.should.equal('TBA')
+        res.body.title.should.equal('Rapat Paripurna')
+        res.body.description.should.equal('Rapat Paripurna bersama para koruptor')
+        res.body.typePlaces.should.equal('bar')
+        res.body.status.should.equal('TBA')
 
-          res.body.participants.should.be.a('array')
+        res.body.participants.should.be.a('array')
 
-          done()
-        })
+        done()
       })
     })
+  })
 
-    // NOTE: editmeetup
-    describe('PUT - update Meetup', () => {
-      it('should update the Meetup', (done) => {
-        chai.request(server)
-        .put(`/editmeetup/${idMeetup}`)
-        .send({
-          title: "Update Rapat Pers",
-          description: "Update Rapat Pers diadakan pada hari Senin",
-          time: Date.now(),
-          typePlaces: "park",
-          participants: [{"user": idParticipant1}, {"user": idParticipant2}],
-          status: "TBA",
-          location60: [],
-          location30: [],
-          location15: []
-        })
-        .end((error, res) => {
+  // NOTE: editmeetup
+  describe('PUT - update Meetup', () => {
+    it('should update the Meetup', (done) => {
+      chai.request(server)
+      .put(`/editmeetup/${idMeetup}`)
+      .send({
+        title: "Update Rapat Pers",
+        description: "Update Rapat Pers diadakan pada hari Senin",
+        time: Date.now(),
+        typePlaces: "park",
+        participants: [{"user": idParticipant1}, {"user": idParticipant2}],
+        status: "TBA",
+        location60: [],
+        location30: [],
+        location15: []
+      })
+      .end((error, res) => {
 
-          res.should.have.status(200)
+        res.should.have.status(200)
 
-          res.body.should.be.a('object')
+        res.body.should.be.a('object')
 
-          res.body.should.have.property('title')
-          res.body.should.have.property('description')
-          res.body.should.have.property('meetingTime')
-          res.body.should.have.property('confirmationTime')
-          res.body.should.have.property('typePlaces')
-          res.body.should.have.property('creator')
-          res.body.should.have.property('_id')
-          res.body.should.have.property('updatedDate')
-          res.body.should.have.property('createdDate')
-          res.body.should.have.property('location15')
-          res.body.should.have.property('location30')
-          res.body.should.have.property('location60')
-          res.body.should.have.property('status')
-          res.body.should.have.property('participants')
+        res.body.should.have.property('title')
+        res.body.should.have.property('description')
+        res.body.should.have.property('meetingTime')
+        res.body.should.have.property('confirmationTime')
+        res.body.should.have.property('typePlaces')
+        res.body.should.have.property('creator')
+        res.body.should.have.property('_id')
+        res.body.should.have.property('updatedDate')
+        res.body.should.have.property('createdDate')
+        res.body.should.have.property('location15')
+        res.body.should.have.property('location30')
+        res.body.should.have.property('location60')
+        res.body.should.have.property('status')
+        res.body.should.have.property('participants')
 
-          res.body.title.should.equal('Update Rapat Pers')
-          res.body.description.should.equal('Update Rapat Pers diadakan pada hari Senin')
-          res.body.typePlaces.should.equal('park')
-          res.body.status.should.equal('TBA')
+        res.body.title.should.equal('Update Rapat Pers')
+        res.body.description.should.equal('Update Rapat Pers diadakan pada hari Senin')
+        res.body.typePlaces.should.equal('park')
+        res.body.status.should.equal('TBA')
 
-          done()
-        })
+        done()
       })
     })
+  })
 
-    // NOTE: updateparticipants
-    describe('PUT - update Participants', () => {
-      it('should update the Participants', (done) => {
-        chai.request(server)
-        .put(`/updatepartipants/${idMeetup}`)
-        .send({
-            participants: [{"user": idParticipant3}]
-        })
-        .end((error, res) => {
+  // NOTE: updateparticipants
+  describe('PUT - update Participants', () => {
+    it('should update the Participants', (done) => {
+      chai.request(server)
+      .put(`/updatepartipants/${idMeetup}`)
+      .send({
+          participants: [{"user": idParticipant3}]
+      })
+      .end((error, res) => {
 
-          res.should.have.status(200)
+        res.should.have.status(200)
 
-          res.body.should.be.a('object')
+        res.body.should.be.a('object')
 
-          res.body.should.have.property('title')
-          res.body.should.have.property('description')
-          res.body.should.have.property('meetingTime')
-          res.body.should.have.property('confirmationTime')
-          res.body.should.have.property('typePlaces')
-          res.body.should.have.property('creator')
-          res.body.should.have.property('_id')
-          res.body.should.have.property('updatedDate')
-          res.body.should.have.property('createdDate')
-          res.body.should.have.property('location15')
-          res.body.should.have.property('location30')
-          res.body.should.have.property('location60')
-          res.body.should.have.property('status')
-          res.body.should.have.property('participants')
+        res.body.should.have.property('title')
+        res.body.should.have.property('description')
+        res.body.should.have.property('meetingTime')
+        res.body.should.have.property('confirmationTime')
+        res.body.should.have.property('typePlaces')
+        res.body.should.have.property('creator')
+        res.body.should.have.property('_id')
+        res.body.should.have.property('updatedDate')
+        res.body.should.have.property('createdDate')
+        res.body.should.have.property('location15')
+        res.body.should.have.property('location30')
+        res.body.should.have.property('location60')
+        res.body.should.have.property('status')
+        res.body.should.have.property('participants')
 
-          res.body.title.should.equal('Update Rapat Pers')
-          res.body.description.should.equal('Update Rapat Pers diadakan pada hari Senin')
-          res.body.typePlaces.should.equal('park')
-          res.body.status.should.equal('TBA')
+        res.body.title.should.equal('Update Rapat Pers')
+        res.body.description.should.equal('Update Rapat Pers diadakan pada hari Senin')
+        res.body.typePlaces.should.equal('park')
+        res.body.status.should.equal('TBA')
 
-          done()
-        })
+        done()
       })
     })
+  })
 
-    // NOTE: finalizemeetup
-    describe('PUT - finalize Meetup', () => {
-      it('should finalize the Meetup', (done) => {
-        chai.request(server)
-        .put(`/finalizemeetup/${idMeetup}`)
-        .end((error, res) => {
-          res.should.have.status(200)
-          res.body.should.be.a('object')
+  // NOTE: finalizemeetup
+  describe('PUT - finalize Meetup', () => {
 
-          res.body.should.have.property('title')
-          res.body.should.have.property('description')
-          res.body.should.have.property('meetingTime')
-          res.body.should.have.property('confirmationTime')
-          res.body.should.have.property('typePlaces')
-          res.body.should.have.property('creator')
-          res.body.should.have.property('_id')
-          res.body.should.have.property('updatedDate')
-          res.body.should.have.property('createdDate')
-          res.body.should.have.property('location15')
-          res.body.should.have.property('location30')
-          res.body.should.have.property('location60')
-          res.body.should.have.property('status')
-          res.body.should.have.property('participants')
+    it('should finalize the Meetup', (done) => {
+      chai.request(server)
+      .put(`/finalizemeetup/${idMeetup}`)
+      .end((error, res) => {
 
-          res.body.title.should.equal('Update Rapat Pers')
-          res.body.description.should.equal('Update Rapat Pers diadakan pada hari Senin')
-          res.body.typePlaces.should.equal('park')
-          res.body.status.should.equal('upcoming')
+        res.should.have.status(200)
+        res.body.should.be.a('object')
 
-          res.body.participants.should.be.a('array')
+        res.body.should.have.property('title')
+        res.body.should.have.property('description')
+        res.body.should.have.property('meetingTime')
+        res.body.should.have.property('confirmationTime')
+        res.body.should.have.property('typePlaces')
+        res.body.should.have.property('creator')
+        res.body.should.have.property('_id')
+        res.body.should.have.property('updatedDate')
+        res.body.should.have.property('createdDate')
+        res.body.should.have.property('location15')
+        res.body.should.have.property('location30')
+        res.body.should.have.property('location60')
+        res.body.should.have.property('status')
+        res.body.should.have.property('participants')
 
-          done()
-        })
+        res.body.title.should.equal('Update Rapat Pers')
+        res.body.description.should.equal('Update Rapat Pers diadakan pada hari Senin')
+        res.body.typePlaces.should.equal('park')
+        res.body.status.should.equal('upcoming')
+
+        res.body.participants.should.be.a('array')
+
+        done()
       })
     })
+  })
 
-    // NOTE: deletemeetup
-    describe('DELETE - delete Meetup', () => {
-      it('should delete the Meetup', (done) => {
-        chai.request(server)
-        .delete(`/deletemeetup/${idMeetup}`)
-        .end((error, res) => {
+  // NOTE: deletemeetup
+  describe('DELETE - delete Meetup', () => {
+    it('should delete the Meetup', (done) => {
+      chai.request(server)
+      .delete(`/deletemeetup/${idMeetup}`)
+      .end((error, res) => {
 
-          res.should.have.status(200)
-          res.body.should.be.a('object')
+        res.should.have.status(200)
+        res.body.should.be.a('object')
 
-          res.body.should.have.property('title')
-          res.body.should.have.property('description')
-          res.body.should.have.property('meetingTime')
-          res.body.should.have.property('confirmationTime')
-          res.body.should.have.property('typePlaces')
-          res.body.should.have.property('creator')
-          res.body.should.have.property('_id')
-          res.body.should.have.property('updatedDate')
-          res.body.should.have.property('createdDate')
-          res.body.should.have.property('location15')
-          res.body.should.have.property('location30')
-          res.body.should.have.property('location60')
-          res.body.should.have.property('status')
-          res.body.should.have.property('participants')
+        res.body.should.have.property('title')
+        res.body.should.have.property('description')
+        res.body.should.have.property('meetingTime')
+        res.body.should.have.property('confirmationTime')
+        res.body.should.have.property('typePlaces')
+        res.body.should.have.property('creator')
+        res.body.should.have.property('_id')
+        res.body.should.have.property('updatedDate')
+        res.body.should.have.property('createdDate')
+        res.body.should.have.property('location15')
+        res.body.should.have.property('location30')
+        res.body.should.have.property('location60')
+        res.body.should.have.property('status')
+        res.body.should.have.property('participants')
 
-          res.body.title.should.equal('Update Rapat Pers')
-          res.body.description.should.equal('Update Rapat Pers diadakan pada hari Senin')
-          res.body.typePlaces.should.equal('park')
-          res.body.status.should.equal('upcoming')
+        res.body.title.should.equal('Update Rapat Pers')
+        res.body.description.should.equal('Update Rapat Pers diadakan pada hari Senin')
+        res.body.typePlaces.should.equal('park')
+        res.body.status.should.equal('upcoming')
 
-          res.body.participants.should.be.a('array')
-          res.body.participants[0].should.equal(idUser)
+        res.body.participants.should.be.a('array')
 
-          done()
-        })
+        done()
       })
     })
+  })
 })
