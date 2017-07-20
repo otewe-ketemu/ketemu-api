@@ -108,8 +108,9 @@ methods.updateParticipants = (req, res) => {
     .populate('creator participants.user')
     .exec((err, record) => {
         if (err) res.json({err})
-        record.participants.push(req.body.participants)
-        record.save(err => {
+        record.participants.push({user: req.body.user, status: 'pending'})
+        console.log('.......: ', record)
+        record.save((err, data) => {
             Meetup.findById(req.params.id)
                 .populate('creator participants.user')
                 .exec((err, record) => {

@@ -8,7 +8,14 @@ let User = require('../models/user')
 let Meetup = require('../models/meetup')
 
 let idUser = ''
+let idParticipant1 = ''
+let usernameParticipant1 = ''
+let idParticipant2 = ''
+let usernameParticipant2 = ''
+let idParticipant3 = ''
+let usernameParticipant3 = ''
 let idMeetup = ''
+let username = ''
 
 // NOTE: USER
 describe('USER', () => {
@@ -21,18 +28,20 @@ describe('USER', () => {
 
   // NOTE: signup
   describe('POST -create user', () => {
-    it('should ceate new user', (done) => {
+
+    it('should ceate first user', (done) => {
       chai.request(server)
       .post('/signup')
       .send({
         name: "Butet Silaen",
         username: "butet",
         password: "butet",
-        email: "butet@gmail.com"
+        email: "butetbatak26@gmail.com"
       })
       .end((error, res) => {
 
         idUser = res.body.data._id
+        username = res.body.data.username
 
         res.should.have.status(200)
 
@@ -57,13 +66,151 @@ describe('USER', () => {
         res.body.data.should.have.property('username')
 
         res.body.data.name.should.equal('Butet Silaen')
-        res.body.data.email.should.equal('butet@gmail.com')
+        res.body.data.email.should.equal('butetbatak26@gmail.com')
         res.body.data.username.should.equal('butet')
 
         res.body.data.password.should.not.equal('butet')
 
+        done()
       })
-      done()
+    })
+
+    it('should ceate second user', (done) => {
+      chai.request(server)
+      .post('/signup')
+      .send({
+        name: "Uci Arahito",
+        username: "arahito",
+        password: "arahito",
+        email: "arahitolubis@gmail.com"
+      })
+      .end((error, res) => {
+
+        idParticipant1 = res.body.data._id
+        usernameParticipant1 = res.body.data.username
+
+        res.should.have.status(200)
+
+        res.body.should.be.a('object')
+
+        res.body.should.have.property('data')
+        res.body.should.have.property('status')
+
+        res.body.status.should.equal(true)
+        res.body.data.should.be.a('object')
+
+        res.body.data.should.have.property('name')
+        res.body.data.should.have.property('password')
+        res.body.data.should.have.property('email')
+        res.body.data.should.have.property('_id')
+        res.body.data.should.have.property('updatedDate')
+        res.body.data.should.have.property('createdDate')
+        res.body.data.should.have.property('officeAddressGeolocation')
+        res.body.data.should.have.property('officeAddressName')
+        res.body.data.should.have.property('homeAddressGeolocation')
+        res.body.data.should.have.property('homeAddressName')
+        res.body.data.should.have.property('username')
+
+        res.body.data.name.should.equal('Uci Arahito')
+        res.body.data.email.should.equal('arahitolubis@gmail.com')
+        res.body.data.username.should.equal('arahito')
+
+        res.body.data.password.should.not.equal('arahito')
+
+        done()
+      })
+    })
+
+    it('should ceate third user', (done) => {
+      chai.request(server)
+      .post('/signup')
+      .send({
+        name: "Aldy Andika",
+        username: "andika",
+        password: "andika",
+        email: "aldy.andika@gmail.com"
+      })
+      .end((error, res) => {
+
+        idParticipant2 = res.body.data._id
+        usernameParticipant2 = res.body.data.username
+
+        res.should.have.status(200)
+
+        res.body.should.be.a('object')
+
+        res.body.should.have.property('data')
+        res.body.should.have.property('status')
+
+        res.body.status.should.equal(true)
+        res.body.data.should.be.a('object')
+
+        res.body.data.should.have.property('name')
+        res.body.data.should.have.property('password')
+        res.body.data.should.have.property('email')
+        res.body.data.should.have.property('_id')
+        res.body.data.should.have.property('updatedDate')
+        res.body.data.should.have.property('createdDate')
+        res.body.data.should.have.property('officeAddressGeolocation')
+        res.body.data.should.have.property('officeAddressName')
+        res.body.data.should.have.property('homeAddressGeolocation')
+        res.body.data.should.have.property('homeAddressName')
+        res.body.data.should.have.property('username')
+
+        res.body.data.name.should.equal('Aldy Andika')
+        res.body.data.email.should.equal('aldy.andika@gmail.com')
+        res.body.data.username.should.equal('andika')
+
+        res.body.data.password.should.not.equal('andika')
+
+        done()
+      })
+    })
+
+    it('should ceate fourth user', (done) => {
+      chai.request(server)
+      .post('/signup')
+      .send({
+        name: "Shabrina Virta",
+        username: "shabrina",
+        password: "shabrina",
+        email: "scoutcrew10@gmail.com"
+      })
+      .end((error, res) => {
+
+        idParticipant3 = res.body.data._id
+        usernameParticipant3 = res.body.data.username
+
+        res.should.have.status(200)
+
+        res.body.should.be.a('object')
+
+        res.body.should.have.property('data')
+        res.body.should.have.property('status')
+
+        res.body.status.should.equal(true)
+        res.body.data.should.be.a('object')
+
+        res.body.data.should.have.property('name')
+        res.body.data.should.have.property('password')
+        res.body.data.should.have.property('email')
+        res.body.data.should.have.property('_id')
+        res.body.data.should.have.property('updatedDate')
+        res.body.data.should.have.property('createdDate')
+        res.body.data.should.have.property('officeAddressGeolocation')
+        res.body.data.should.have.property('officeAddressName')
+        res.body.data.should.have.property('homeAddressGeolocation')
+        res.body.data.should.have.property('homeAddressName')
+        res.body.data.should.have.property('username')
+
+        res.body.data.name.should.equal('Shabrina Virta')
+        res.body.data.email.should.equal('scoutcrew10@gmail.com')
+        res.body.data.username.should.equal('shabrina')
+
+        res.body.data.password.should.not.equal('shabrina')
+
+        done()
+      })
     })
   })
 
@@ -88,8 +235,8 @@ describe('USER', () => {
         res.body.message.should.equal('SignIn success')
         res.body.username.should.equal('butet')
 
+        done()
       })
-      done()
     })
   })
 
@@ -106,15 +253,14 @@ describe('USER', () => {
 
         res.body[0].name.should.equal('Butet Silaen')
         res.body[0].username.should.equal('butet')
-        res.body[0].email.should.equal('butet@gmail.com')
+        res.body[0].email.should.equal('butetbatak26@gmail.com')
 
-
+        done()
       })
-      done()
     })
   })
 
-  // NOTE: detailuser
+  // NOTE: detailuserbyid
   describe('DETAIL - detail User', () => {
       it('should detail the User', (done) => {
       chai.request(server)
@@ -127,11 +273,32 @@ describe('USER', () => {
 
           res.body.name.should.equal('Butet Silaen')
           res.body.username.should.equal('butet')
-          res.body.email.should.equal('butet@gmail.com')
+          res.body.email.should.equal('butetbatak26@gmail.com')
 
 
+          done()
       })
-      done()
+      })
+  })
+
+  // NOTE: detailuserbyusername
+  describe('DETAIL BY USERNAME - detail User by Username', () => {
+      it('should detail the User by username', (done) => {
+      chai.request(server)
+      .get(`/userbyusername/${username}`)
+      .end((error, res) => {
+          // console.log(res.body);
+
+          res.should.have.status(200)
+          res.body.should.be.a('object')
+
+          res.body.name.should.equal('Butet Silaen')
+          res.body.username.should.equal('butet')
+          res.body.email.should.equal('butetbatak26@gmail.com')
+
+
+          done()
+      })
       })
   })
 
@@ -147,64 +314,110 @@ describe('USER', () => {
           res.body.should.be.a('array')
 
 
+          done()
       })
-      done()
       })
   })
 
   // NOTE: officeaddressgeolocation
   describe('OFFICE ADDRESS GEOLOCATION - office address geolocation User', () => {
-        it('should office address geolocation the User', (done) => {
-        chai.request(server)
-        .get(`/officeaddressgeolocation/${idUser}`)
-        .end((error, res) => {
-            // console.log(res.body);
+      it('should office address geolocation the User', (done) => {
+      chai.request(server)
+      .get(`/officeaddressgeolocation/${idUser}`)
+      .end((error, res) => {
+          // console.log(res.body);
 
-            res.should.have.status(200)
-            res.body.should.be.a('array')
-
-
-        })
-        done()
-        })
-    })
-
-    // NOTE: edituser
-    describe('PUT - update User', () => {
-        it('should update the User', (done) => {
-        chai.request(server)
-        .put(`/edituser/${idUser}`)
-        .send({
-            name: "Ucok Pardamean",
-            username: "pardamean",
-            password: "pardamean",
-            email: "pardamean@gmail.com",
-            officeAddressName: "Jalan Sultan Iskandar Muda, No. 55",
-            officeAddressGeolocation: [-6.260846, 106.7806537],
-            homeAddressName: "Jalan Tanah Kusir 4, No. 10",
-            homeAddressGeolocation: [-6.2600141, 106.7793779],
-            updatedDate: Date.now()
-        })
-        .end((error, res) => {
-
-            res.should.have.status(200)
-            // console.log(res.body);
-
-            res.body.should.be.a('object')
-
-            res.body.name.should.equal('Ucok Pardamean')
-            res.body.username.should.equal('pardamean')
-            res.body.email.should.equal('pardamean@gmail.com')
-            res.body.officeAddressName.should.equal('Jalan Sultan Iskandar Muda, No. 55')
-            res.body.homeAddressName.should.equal('Jalan Tanah Kusir 4, No. 10')
-
-            res.body.password.should.not.equal('pardamean')
+          res.should.have.status(200)
+          res.body.should.be.a('array')
 
 
-        })
-        done()
-        })
-    })
+          done()
+      })
+      })
+  })
+
+  // NOTE: edituser
+  describe('PUT - update User', () => {
+      it('should update the User', (done) => {
+      chai.request(server)
+      .put(`/edituser/${idUser}`)
+      .send({
+          name: "Ucok Pardamean",
+          username: "pardamean",
+          password: "pardamean",
+          email: "pardamean@gmail.com",
+          officeAddressName: "Jalan Sultan Iskandar Muda, No. 55",
+          officeAddressGeolocation: [-6.260846, 106.7806537],
+          homeAddressName: "Jalan Tanah Kusir 4, No. 10",
+          homeAddressGeolocation: [-6.2600141, 106.7793779],
+          updatedDate: Date.now()
+      })
+      .end((error, res) => {
+
+          res.should.have.status(200)
+          // console.log(res.body);
+
+          res.body.should.be.a('object')
+
+          res.body.name.should.equal('Ucok Pardamean')
+          res.body.username.should.equal('pardamean')
+          res.body.email.should.equal('pardamean@gmail.com')
+          res.body.officeAddressName.should.equal('Jalan Sultan Iskandar Muda, No. 55')
+          res.body.homeAddressName.should.equal('Jalan Tanah Kusir 4, No. 10')
+
+          res.body.password.should.not.equal('pardamean')
+
+          done()
+      })
+      })
+  })
+
+  // NOTE: updateAvatarUrl
+  describe('UPDATE AVATAR URL- update avatar url', () => {
+      it('should update avatar url', (done) => {
+      chai.request(server)
+      .put(`/updateavatar/${idUser}`)
+      .send({
+          avatar: "https://elasticbeanstalk-us-west-2-183031211456.s3.amazonaws.com/profile_pictures%2F596f05a222c7a00d7f0733d3_arahito.png",
+      })
+      .end((error, res) => {
+          // console.log(res.body);
+
+          res.should.have.status(200)
+          res.body.should.be.a('object')
+
+          res.body.name.should.equal('Butet Silaen')
+          res.body.username.should.equal('butet')
+          res.body.email.should.equal('butetbatak26@gmail.com')
+          res.body.avatarURL.should.equal('https://elasticbeanstalk-us-west-2-183031211456.s3.amazonaws.com/profile_pictures%2F596f05a222c7a00d7f0733d3_arahito.png')
+
+
+          done()
+      })
+      })
+  })
+
+  // NOTE: searchbyusername
+  describe('SEARCH BY USERNAME - search by Username', () => {
+      it('should search by username', (done) => {
+      chai.request(server)
+      .get(`/searchuser/bu`)
+      .end((error, res) => {
+          // console.log(res.body);
+
+          res.should.have.status(200)
+          res.body.should.be.a('object')
+
+          res.body.name.should.equal('Butet Silaen')
+          res.body.username.should.equal('butet')
+          res.body.email.should.equal('butetbatak26@gmail.com')
+
+
+          done()
+      })
+      })
+  })
+
 })
 
 // NOTE: MEETUP
@@ -224,13 +437,13 @@ describe('MEETUP', () => {
         .send({
             title: "Rapat Paripurna",
             description: "Rapat Paripurna bersama para koruptor",
-            time: Date.now(),
+            meetingTime: "1500780908592",
+            confirmationTime: "1500710908592",
             typePlaces: "bar",
-            participants: [`${idUser}`]
+            creator: idUser,
+            participants: [{"user": idParticipant1}, {"user": idParticipant2}]
         })
         .end((error, res) => {
-            // console.log('+++: ', idUser);
-            // console.log(res.body)
 
             idMeetup = res.body._id
 
@@ -238,8 +451,10 @@ describe('MEETUP', () => {
             res.body.should.be.a('object')
             res.body.should.have.property('title')
             res.body.should.have.property('description')
-            res.body.should.have.property('time')
+            res.body.should.have.property('meetingTime')
+            res.body.should.have.property('confirmationTime')
             res.body.should.have.property('typePlaces')
+            res.body.should.have.property('creator')
             res.body.should.have.property('_id')
             res.body.should.have.property('updatedDate')
             res.body.should.have.property('createdDate')
@@ -247,7 +462,7 @@ describe('MEETUP', () => {
             res.body.should.have.property('location30')
             res.body.should.have.property('location60')
             res.body.should.have.property('status')
-            res.body.should.have.property('participants')
+            res.body.should.have.property('particispants')
 
             res.body.title.should.equal('Rapat Paripurna')
             res.body.description.should.equal('Rapat Paripurna bersama para koruptor')
@@ -255,8 +470,8 @@ describe('MEETUP', () => {
             res.body.status.should.equal('TBA')
 
 
+            done()
         })
-        done()
         })
     })
 
@@ -274,8 +489,10 @@ describe('MEETUP', () => {
 
             res.body[0].should.have.property('title')
             res.body[0].should.have.property('description')
-            res.body[0].should.have.property('time')
+            res.body[0].should.have.property('meetingTime')
+            res.body[0].should.have.property('confirmationTime')
             res.body[0].should.have.property('typePlaces')
+            res.body[0].should.have.property('creator')
             res.body[0].should.have.property('_id')
             res.body[0].should.have.property('updatedDate')
             res.body[0].should.have.property('createdDate')
@@ -290,9 +507,8 @@ describe('MEETUP', () => {
             res.body[0].typePlaces.should.equal('bar')
             res.body[0].status.should.equal('TBA')
 
-
+            done()
         })
-        done()
         })
     })
 
@@ -309,8 +525,10 @@ describe('MEETUP', () => {
 
             res.body.should.have.property('title')
             res.body.should.have.property('description')
-            res.body.should.have.property('time')
+            res.body.should.have.property('meetingTime')
+            res.body.should.have.property('confirmationTime')
             res.body.should.have.property('typePlaces')
+            res.body.should.have.property('creator')
             res.body.should.have.property('_id')
             res.body.should.have.property('updatedDate')
             res.body.should.have.property('createdDate')
@@ -328,8 +546,8 @@ describe('MEETUP', () => {
             res.body.participants.should.be.a('array')
 
 
+            done()
         })
-        done()
         })
     })
 
@@ -343,7 +561,7 @@ describe('MEETUP', () => {
             description: "Update Rapat Pers diadakan pada hari Senin",
             time: Date.now(),
             typePlaces: "park",
-            participants: [`${idUser}`],
+            participants: [{"user": idParticipant1}, {"user": idParticipant2}],
             status: "TBA",
             location60: [],
             location30: [],
@@ -358,8 +576,10 @@ describe('MEETUP', () => {
 
             res.body.should.have.property('title')
             res.body.should.have.property('description')
-            res.body.should.have.property('time')
+            res.body.should.have.property('meetingTime')
+            res.body.should.have.property('confirmationTime')
             res.body.should.have.property('typePlaces')
+            res.body.should.have.property('creator')
             res.body.should.have.property('_id')
             res.body.should.have.property('updatedDate')
             res.body.should.have.property('createdDate')
@@ -375,8 +595,8 @@ describe('MEETUP', () => {
             res.body.status.should.equal('TBA')
 
 
+            done()
         })
-        done()
         })
     })
 
@@ -386,19 +606,20 @@ describe('MEETUP', () => {
         chai.request(server)
         .put(`/updatepartipants/${idMeetup}`)
         .send({
-            participants: [`${idUser}`]
+            participants: [{"user": idParticipant3}]
         })
         .end((error, res) => {
 
             res.should.have.status(200)
-            // console.log(res.body);
 
             res.body.should.be.a('object')
 
             res.body.should.have.property('title')
             res.body.should.have.property('description')
-            res.body.should.have.property('time')
+            res.body.should.have.property('meetingTime')
+            res.body.should.have.property('confirmationTime')
             res.body.should.have.property('typePlaces')
+            res.body.should.have.property('creator')
             res.body.should.have.property('_id')
             res.body.should.have.property('updatedDate')
             res.body.should.have.property('createdDate')
@@ -413,49 +634,8 @@ describe('MEETUP', () => {
             res.body.typePlaces.should.equal('park')
             res.body.status.should.equal('TBA')
 
-
+            done()
         })
-        done()
-        })
-    })
-
-    // NOTE: cancelMeetup
-    describe('CANCEL - cancel Meetup', () => {
-        it('should cancel the Meetup', (done) => {
-        chai.request(server)
-        .put(`/cancelMeetup/${idMeetup}`)
-        .send({
-            participants: [`${idUser}`]
-        })
-        .end((error, res) => {
-            // console.log(res.body);
-
-            res.should.have.status(200)
-            res.body.should.be.a('object')
-
-            res.body.should.have.property('title')
-            res.body.should.have.property('description')
-            res.body.should.have.property('time')
-            res.body.should.have.property('typePlaces')
-            res.body.should.have.property('_id')
-            res.body.should.have.property('updatedDate')
-            res.body.should.have.property('createdDate')
-            res.body.should.have.property('location15')
-            res.body.should.have.property('location30')
-            res.body.should.have.property('location60')
-            res.body.should.have.property('status')
-            res.body.should.have.property('participants')
-
-            res.body.title.should.equal('Update Rapat Pers')
-            res.body.description.should.equal('Update Rapat Pers diadakan pada hari Senin')
-            res.body.typePlaces.should.equal('park')
-            res.body.status.should.equal('TBA')
-
-            res.body.participants.should.be.a('array')
-
-
-        })
-        done()
         })
     })
 
@@ -464,9 +644,9 @@ describe('MEETUP', () => {
         it('should finalize the Meetup', (done) => {
         chai.request(server)
         .put(`/finalizemeetup/${idMeetup}`)
-        .send({
-            participants: [`${idUser}`]
-        })
+        // .send({
+        //     participants: [{"user": idParticipant1}, {"user": idParticipant2}, {"user": idParticipant3}]
+        // })
         .end((error, res) => {
             // console.log(res.body);
 
@@ -475,8 +655,10 @@ describe('MEETUP', () => {
 
             res.body.should.have.property('title')
             res.body.should.have.property('description')
-            res.body.should.have.property('time')
+            res.body.should.have.property('meetingTime')
+            res.body.should.have.property('confirmationTime')
             res.body.should.have.property('typePlaces')
+            res.body.should.have.property('creator')
             res.body.should.have.property('_id')
             res.body.should.have.property('updatedDate')
             res.body.should.have.property('createdDate')
@@ -494,8 +676,8 @@ describe('MEETUP', () => {
             res.body.participants.should.be.a('array')
 
 
+            done()
         })
-        done()
         })
     })
 
@@ -512,8 +694,10 @@ describe('MEETUP', () => {
 
             res.body.should.have.property('title')
             res.body.should.have.property('description')
-            res.body.should.have.property('time')
+            res.body.should.have.property('meetingTime')
+            res.body.should.have.property('confirmationTime')
             res.body.should.have.property('typePlaces')
+            res.body.should.have.property('creator')
             res.body.should.have.property('_id')
             res.body.should.have.property('updatedDate')
             res.body.should.have.property('createdDate')
@@ -532,8 +716,8 @@ describe('MEETUP', () => {
             res.body.participants[0].should.equal(idUser)
 
 
+            done()
         })
-        done()
         })
     })
 })
