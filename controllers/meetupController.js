@@ -32,7 +32,6 @@ methods.createMeetup = (req, res) => {
             res.json(record)
         })
     })
-
 } //createMeetup
 
 methods.getAllMeetup = (req, res) => {
@@ -110,7 +109,6 @@ methods.updateParticipants = (req, res) => {
   Meetup.findById(req.params.id)
     .populate('creator participants.user')
     .exec((err, record) => {
-
         if (err) res.json({err})
         record.participants.push({user: req.body.user, status: 'pending'})
         console.log('.......: ', record)
@@ -122,7 +120,6 @@ methods.updateParticipants = (req, res) => {
                     res.json(record)
                 })
         })
-
     })
 } //editParticipants
 
