@@ -69,6 +69,34 @@ describe('USER', () => {
         res.body.data.email.should.equal('butetbatak26@gmail.com')
         res.body.data.username.should.equal('butet')
 
+        done()
+      })
+    })
+
+    it('should not return object of user because the password is wrong', (done) => {
+      chai.request(server)
+      .post('/signup')
+      .send({
+        name: "Butet Silaen",
+        username: "butet",
+        password: "butet",
+        email: "butetbatak26@gmail.com"
+      })
+      .end((error, res) => {
+
+        idUser = res.body.data._id
+        username = res.body.data.username
+
+        res.should.have.status(200)
+
+        res.body.should.be.a('object')
+
+        res.body.should.have.property('data')
+        res.body.should.have.property('status')
+
+        res.body.status.should.equal(true)
+        res.body.data.should.be.a('object')
+
         res.body.data.password.should.not.equal('butet')
 
         done()
@@ -714,7 +742,6 @@ describe('MEETUP', () => {
 
             res.body.participants.should.be.a('array')
             res.body.participants[0].should.equal(idUser)
-
 
             done()
         })
