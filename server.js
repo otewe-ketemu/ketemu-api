@@ -16,7 +16,7 @@ let db_config = {
     test: 'mongodb://localhost/ketemu-backend-test'
 }
 
-var app_env = app.settings.env
+var app_env = app.settings.env || 'development'
 console.log('------------ app_env: ', app_env);
 
 mongoose.connect(db_config[app_env], (err, res) => {
